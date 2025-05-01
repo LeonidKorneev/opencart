@@ -3,7 +3,6 @@ package com.opencart.model;
 import com.opencart.model.base.BasePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.devtools.v135.fedcm.model.Account;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
@@ -31,6 +30,11 @@ public class LoginPage extends BasePage {
         passwordField.sendKeys("hsdkjhfgkjsdgfs");
 
         return this;
+    }
+
+    public AccountPage clickLoginButton() {
+        loginButton.click();
+        return new AccountPage(getDriver());
     }
 
     public List<String> getSidebarMenuOptions() {
