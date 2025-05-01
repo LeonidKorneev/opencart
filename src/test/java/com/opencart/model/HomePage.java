@@ -1,6 +1,11 @@
 package com.opencart.model;
 
-public class HomePage {
+import com.opencart.model.base.BasePage;
+import org.openqa.selenium.WebDriver;
 
+public class HomePage extends BasePage {
 
+    public HomePage(WebDriver driver) {
+        super(driver);
+    }
 }
