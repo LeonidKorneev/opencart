@@ -7,7 +7,7 @@ import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
-public class LoginPage extends BasePage {
+public class LoginPage extends BasePage<LoginPage> {
 
     @FindBy(id = "input-email")
     private WebElement emailField;
@@ -34,6 +34,7 @@ public class LoginPage extends BasePage {
 
     public AccountPage clickLoginButton() {
         loginButton.click();
+
         return new AccountPage(getDriver());
     }
 
