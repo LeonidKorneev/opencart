@@ -1,11 +1,12 @@
 package com.opencart.model;
 
+import com.opencart.model.base.BaseFrame;
 import com.opencart.model.base.BasePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class TopMenuFrame<T extends BasePage<T>> extends BasePage<T> {
+public class TopMenuFrame<T extends BasePage<T>> extends BaseFrame<T> {
 
     @FindBy(linkText = "Tablets")
     private WebElement tabletsLink;
@@ -23,7 +24,38 @@ public class TopMenuFrame<T extends BasePage<T>> extends BasePage<T> {
     private WebElement monitorSubcategoryLink;
 
     public TopMenuFrame(WebDriver driver, T returnPage) {
-        super(driver);
+        super(driver, returnPage);
+    }
+
+    public TabletsPage openTabletsCategory() {
+        tabletsLink.click();
+
+        return new TabletsPage(getDriver());
+    }
+
+
+    public T hoverOverDesktopsCategory() {
+        hoverOverElement(desktopsLink);
+
+        return getReturnPage();
+    }
+
+    public MacSubcategoryPage openMacSubcategory() {
+        macSubcategoryLink.click();
+
+        return new MacSubcategoryPage(getDriver());
+    }
+
+    public T hoverOverComponentsCategory() {
+        hoverOverElement(componentsLink);
+
+        return getReturnPage();
+    }
+
+    public MonitorsSubcategoryPage openMonitorsSubcategory() {
+        monitorSubcategoryLink.click();
+
+        return new MonitorsSubcategoryPage(getDriver());
     }
 
 }
