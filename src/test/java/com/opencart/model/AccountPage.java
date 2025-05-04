@@ -5,7 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class AccountPage extends BasePage {
+public class AccountPage extends BasePage<AccountPage> {
 
     @FindBy(tagName = "h2")
     private WebElement accountHeading;
