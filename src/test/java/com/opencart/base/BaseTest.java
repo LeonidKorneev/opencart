@@ -8,7 +8,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
-public class BaseTest {
+public abstract class BaseTest {
 
     protected WebDriver driver;
     protected static final String LINK = "https://naveenautomationlabs.com/opencart";
@@ -28,6 +28,11 @@ public class BaseTest {
         if (driver != null) {
             driver.quit();
         }
+    }
+
+
+    public WebDriver getDriver() {
+        return driver;
     }
 }
 

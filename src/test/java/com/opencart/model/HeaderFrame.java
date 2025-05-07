@@ -32,6 +32,7 @@ public class HeaderFrame <T extends BasePage<T>> extends BaseFrame<T> {
     }
 
     public HeaderFrame<T> typeInSearchValue(String value) {
+        searchField.clear();
         searchField.sendKeys(value);
 
         return this;

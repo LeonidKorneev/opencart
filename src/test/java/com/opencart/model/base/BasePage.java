@@ -1,5 +1,6 @@
 package com.opencart.model.base;
 
+import com.opencart.model.HeaderFrame;
 import com.opencart.model.TopMenuFrame;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.NoAlertPresentException;
@@ -31,6 +32,10 @@ public abstract class BasePage<T extends BasePage<T>> extends BaseModel {
 
     public TopMenuFrame<T> getTopMenu() {
         return new TopMenuFrame<>(getDriver(), (T) this);
+    }
+
+    public HeaderFrame<T> getHeader() {
+        return new HeaderFrame<>(getDriver(), (T) this);
     }
 
 
