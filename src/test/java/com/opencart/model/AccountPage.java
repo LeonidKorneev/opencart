@@ -4,6 +4,9 @@ import com.opencart.model.base.BasePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.By;
+
 
 public class AccountPage extends BasePage<AccountPage> {
 
@@ -15,6 +18,7 @@ public class AccountPage extends BasePage<AccountPage> {
     }
 
     public String getAccountHeading() {
+        getWait2().until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOf(accountHeading)));
         return accountHeading.getText();
     }
 }
