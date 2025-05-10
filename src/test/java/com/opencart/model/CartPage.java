@@ -9,7 +9,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class CartPage extends BasePage<CartPage> {
 
-    @FindBy(css = ".table-bordered [class&='left'] [href*='product_id']")
+    @FindBy(css = ".table-bordered [class$='left'] [href*='product_id']")
     private WebElement addedItemName;
 
     @FindBy(css = "[name^='quantity']")
@@ -31,7 +31,7 @@ public class CartPage extends BasePage<CartPage> {
         }
     }
 
-    public String GetAddedGoodsQuantity() {
+    public String getAddedGoodsQuantity() {
         try {
             getWait2().until(ExpectedConditions.visibilityOf(addedItemQuantity));
             return addedItemQuantity.getAttribute("value");

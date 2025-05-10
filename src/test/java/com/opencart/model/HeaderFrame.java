@@ -44,6 +44,12 @@ public class HeaderFrame <T extends BasePage<T>> extends BaseFrame<T> {
         return new SearchResultPage(getDriver());
     }
 
+    public CartPage clickCartButton() {
+        cartButton.click();
+
+        return new CartPage(getDriver());
+    }
+
     public T clickMyAccountButton() {
         myAccountButton.click();
 

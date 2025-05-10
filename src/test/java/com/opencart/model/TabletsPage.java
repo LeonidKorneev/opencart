@@ -14,7 +14,7 @@ public class TabletsPage extends BasePage<TabletsPage> {
     @FindBy(css = "#cart button[data-toggle='dropdown']")
     private WebElement cartPreviewButton;
 
-    @FindBy(css = ".table-striped [class&='left'] [href*='product_id']")
+    @FindBy(css = ".table-striped [class$='left'] [href*='product_id']")
     private WebElement cartPreviewAddedItemName;
 
     @FindBy(xpath = "(//td[@class='text-right'])[1]")
