@@ -7,7 +7,7 @@ import org.openqa.selenium.support.FindBy;
 
 public class MonitorsSubcategoryPage extends BaseCategoryPage {
 
-    @FindBy(css = ".image = [href$='product_id=42']")
+    @FindBy(css = ".image [href$='product_id=42']")
     private WebElement appleCinema;
 
     public MonitorsSubcategoryPage(WebDriver driver) {

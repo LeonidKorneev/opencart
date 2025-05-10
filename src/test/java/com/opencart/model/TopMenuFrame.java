@@ -20,7 +20,7 @@ public class TopMenuFrame<T extends BasePage<T>> extends BaseFrame<T> {
     @FindBy(linkText = "Components")
     private WebElement componentsLink;
 
-    @FindBy(css = "[href&='25_28']")
+    @FindBy(css = "[href$='25_28']")
     private WebElement monitorSubcategoryLink;
 
     public TopMenuFrame(WebDriver driver, T returnPage) {
