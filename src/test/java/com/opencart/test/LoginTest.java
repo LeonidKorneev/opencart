@@ -1,13 +1,12 @@
 package com.opencart.test;
 
+import com.opencart.data.TestData;
 import com.opencart.base.BaseTest;
 import com.opencart.model.HomePage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.List;
-
-import static com.opencart.data.TestData.expectedLoginSidebarOptionsList;
 
 public class LoginTest extends BaseTest {
 
@@ -32,7 +31,7 @@ public class LoginTest extends BaseTest {
                 .getSidebarMenuOptions();
 
 
-        Assert.assertEquals(actualSidebarOptionsList, expectedLoginSidebarOptionsList);
+        Assert.assertEquals(actualSidebarOptionsList, TestData.expectedLoginSidebarOptionsList);
     }
 
 }

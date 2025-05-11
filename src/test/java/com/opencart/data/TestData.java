@@ -1,6 +1,7 @@
 package com.opencart.data;
 
 import org.openqa.selenium.By;
+import org.testng.annotations.DataProvider;
 
 import java.util.List;
 
@@ -81,4 +82,37 @@ public class TestData {
     public static final List<String> expectedLoginSidebarOptionsList = List.of("Login", "Register", "Forgotten Password",
             "My Account", "Address Book", "Wish List", "Order History", "Downloads", "Recurring payments",
             "Reward Points", "Returns", "Transactions", "Newsletter");
+
+    @DataProvider(name = "withDropdownNavigationData")
+    public static Object[][] getWithDropdownNavMenuData() {
+        return new Object[][]{
+                {DESKTOPS_MENU, ALL_DESKTOPS_MENU, ALL_DESKTOPS_URL, ALL_DESKTOPS_PAGE_TITLE},
+                {LAPTOPS_NOTEBOOKS_MENU, ALL_LAPTOPS_NOTEBOOKS_DROPDOWN_MENU, ALL_LAPTOPS_NOTEBOOKS_URL, ALL_LAPTOPS_NOTEBOOKS_PAGE_TITLE},
+                {COMPONENTS_MENU, ALL_COMPONENTS_DROPDOWN_MENU, ALL_COMPONENTS_URL, ALL_COMPONENTS_PAGE_TITLE},
+                {MP3_PLAYERS_MENU, ALL_MP3_PLAYERS_DROPDOWN_MENU, ALL_MP3_PLAYERS_URL, ALL_MP3_PLAYERS_PAGE_TITLE}
+        };
+    }
+
+    @DataProvider(name = "withoutDropdownNavigationData")
+    public static Object[][] getWithoutDropsdownNavMenuData() {
+        return new Object[][]{
+                {TABLETS_MENU, TABLETS_URL, TABLETS_PAGE_TITLE},
+                {SOFTWARE_MENU, SOFTWARE_URL, SOFTWARE_PAGE_TITLE},
+                {PHONES_PDA_MENU, PHONES_PDA_URL, PHONES_PDA_PAGE_TITLE},
+                {CAMERAS_MENU, CAMERAS_URL, CAMERAS_PAGE_TITLE}
+        };
+    }
+
+    @DataProvider(name = "componentsCategoryNavigationData")
+    public static Object[][] getComponentsCategoryNavigationData() {
+        return new Object[][]{
+                {COMPONENTS_MENU, MICE_AND_TRACKBALLS, MICE_AND_TRACKBALLS_URL, MICE_AND_TRACKBALLS_PAGE_TITLE},
+                {COMPONENTS_MENU, MONITORS, MONITORS_URL, MONITORS_PAGE_TITLE},
+                {COMPONENTS_MENU, PRINTERS, PRINTERS_URL, PRINTERS_PAGE_TITLE},
+                {COMPONENTS_MENU, SCANNERS, SCANNERS_URL, SCANNERS_PAGE_TITLE},
+                {COMPONENTS_MENU, WEB_CAMERAS, WEB_CAMERAS_URL, WEB_CAMERAS_PAGE_TITLE}
+        };
+    }
+
+
 }
