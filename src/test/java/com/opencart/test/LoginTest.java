@@ -7,6 +7,8 @@ import org.testng.annotations.Test;
 
 import java.util.List;
 
+import static com.opencart.data.TestData.expectedLoginSidebarOptionsList;
+
 public class LoginTest extends BaseTest {
 
     @Test
@@ -29,9 +31,6 @@ public class LoginTest extends BaseTest {
                 .getHeader().clickLoginPageButton()
                 .getSidebarMenuOptions();
 
-        List<String> expectedLoginSidebarOptionsList = List.of("Login", "Register", "Forgotten Password",
-                "My Account", "Address Book", "Wish List", "Order History", "Downloads", "Recurring payments",
-                "Reward Points", "Returns", "Transactions", "Newsletter");
 
         Assert.assertEquals(actualSidebarOptionsList, expectedLoginSidebarOptionsList);
     }

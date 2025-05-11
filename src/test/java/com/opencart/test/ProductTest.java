@@ -1,6 +1,7 @@
 package com.opencart.test;
 
 import com.opencart.base.BaseTest;
+import com.opencart.data.TestData;
 import com.opencart.model.HomePage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -40,6 +41,6 @@ public class ProductTest extends BaseTest {
                 .clickAppleCinemaImage()
                 .getMinimumAppleCinemaQuantityMessage();
 
-        Assert.assertEquals(actualAppleCinemaWarningMessage, "This product has a minimum quantity of 2");
+        Assert.assertEquals(actualAppleCinemaWarningMessage, TestData.APPLE_CINEMA_QUANTITY_MESSAGE);
     }
 }

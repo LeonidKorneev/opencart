@@ -1,5 +1,6 @@
 package com.opencart.model;
 
+import com.opencart.data.TestData;
 import com.opencart.model.base.BasePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -27,8 +28,8 @@ public class LoginPage extends BasePage<LoginPage> {
     }
 
     public LoginPage enterLoginData() {
-        emailField.sendKeys("abanabmbajh@yandex.ru");
-        passwordField.sendKeys("hsdkjhfgkjsdgfs");
+        emailField.sendKeys(TestData.EMAIL);
+        passwordField.sendKeys(TestData.PASSWORD);
 
         return this;
     }
