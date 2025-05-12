@@ -3,12 +3,16 @@ package com.opencart.test;
 import com.opencart.base.BaseTest;
 import com.opencart.data.TestData;
 import com.opencart.model.HomePage;
+import io.qameta.allure.Description;
+import io.qameta.allure.Story;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class ProductTest extends BaseTest {
 
     @Test
+    @Story("Product page")
+    @Description("Verify the opened product name")
     public void testProductName() {
 
         String actualProductName = new HomePage(getDriver())
@@ -21,6 +25,8 @@ public class ProductTest extends BaseTest {
     }
 
     @Test
+    @Story("Product page")
+    @Description("Verify the opened product breadcrumb path")
     public void testProductPath() {
 
         String actualProductName = new HomePage(getDriver())
@@ -33,6 +39,8 @@ public class ProductTest extends BaseTest {
     }
 
     @Test
+    @Story("Product page")
+    @Description("Verify the Apple Cinema minimal quantity warning message")
     public void testAppleCinemaWarningMessage() {
 
         String actualAppleCinemaWarningMessage = new HomePage(getDriver())
