@@ -83,7 +83,7 @@ public class TestData {
             "My Account", "Address Book", "Wish List", "Order History", "Downloads", "Recurring payments",
             "Reward Points", "Returns", "Transactions", "Newsletter");
 
-    @DataProvider(name = "withDropdownNavigationData")
+    @DataProvider(name = "withDropdownNavigationData", parallel = true)
     public static Object[][] getWithDropdownNavMenuData() {
         return new Object[][]{
                 {DESKTOPS_MENU, ALL_DESKTOPS_MENU, ALL_DESKTOPS_URL, ALL_DESKTOPS_PAGE_TITLE},
@@ -93,7 +93,7 @@ public class TestData {
         };
     }
 
-    @DataProvider(name = "withoutDropdownNavigationData")
+    @DataProvider(name = "withoutDropdownNavigationData", parallel = true)
     public static Object[][] getWithoutDropsdownNavMenuData() {
         return new Object[][]{
                 {TABLETS_MENU, TABLETS_URL, TABLETS_PAGE_TITLE},
@@ -103,7 +103,7 @@ public class TestData {
         };
     }
 
-    @DataProvider(name = "componentsCategoryNavigationData")
+    @DataProvider(name = "componentsCategoryNavigationData", parallel = true)
     public static Object[][] getComponentsCategoryNavigationData() {
         return new Object[][]{
                 {COMPONENTS_MENU, MICE_AND_TRACKBALLS, MICE_AND_TRACKBALLS_URL, MICE_AND_TRACKBALLS_PAGE_TITLE},
