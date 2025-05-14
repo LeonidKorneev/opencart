@@ -1,6 +1,7 @@
 package com.opencart.model;
 
 import com.opencart.model.base.BaseCategoryPage;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -14,6 +15,7 @@ public class MonitorsSubcategoryPage extends BaseCategoryPage {
         super(driver);
     }
 
+    @Step("Click on the Apple Cinema image")
     public ProductAppleCinemaPage clickAppleCinemaImage() {
         appleCinema.click();
 

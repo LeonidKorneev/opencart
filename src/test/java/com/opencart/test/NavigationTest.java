@@ -4,6 +4,8 @@ import com.opencart.base.BaseTest;
 import com.opencart.base.TestUtils;
 import com.opencart.data.TestData;
 import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -11,8 +13,9 @@ import org.testng.annotations.Test;
 
 public class NavigationTest extends BaseTest {
 
-    @Test
+    @Test(groups = "smoke")
     @Story("Navigation")
+    @Severity(SeverityLevel.BLOCKER)
     @Description("Verify the Store home page is opened via current URL and the page title")
     public void testStoreHomePageURLAndTitle() {
 
@@ -27,8 +30,10 @@ public class NavigationTest extends BaseTest {
         Assert.assertEquals(actualTitle, expextedTitle, "Actual title is different");
     }
 
-    @Test(dataProvider = "withDropdownNavigationData", dataProviderClass = TestData.class)
+    @Test(dataProvider = "withDropdownNavigationData", dataProviderClass = TestData.class,
+            groups = "smoke")
     @Story("Navigation")
+    @Severity(SeverityLevel.CRITICAL)
     @Description("TC_02 Verify the Store navigation menu options via dropdown")
     public void testNavigationBarMenuWithDropdown(By navBarMenu, By navBarDropdownMenu, String expextedURL, String expectedTitle) {
 
@@ -42,8 +47,10 @@ public class NavigationTest extends BaseTest {
         Assert.assertEquals(actualTitle, expectedTitle, "Actual title is different");
     }
 
-    @Test(dataProvider = "withoutDropdownNavigationData", dataProviderClass = TestData.class)
+    @Test(dataProvider = "withoutDropdownNavigationData", dataProviderClass = TestData.class,
+            groups = "smoke")
     @Story("Navigation")
+    @Severity(SeverityLevel.CRITICAL)
     @Description("TC_03 Verify the Store navigation menu options without dropdown")
     public void testNavigationBarMenuWithoutDropdown(By navBarMenu, String expectedURL, String expectedTitle) {
 
@@ -56,8 +63,10 @@ public class NavigationTest extends BaseTest {
         Assert.assertEquals(actualTitle, expectedTitle, "Actual title is different");
     }
 
-    @Test(dataProvider = "componentsCategoryNavigationData", dataProviderClass = TestData.class)
+    @Test(dataProvider = "componentsCategoryNavigationData", dataProviderClass = TestData.class,
+            groups = "smoke")
     @Story("Navigation")
+    @Severity(SeverityLevel.CRITICAL)
     @Description("TC_04 Verify the 'Components' category dropdown options navigation")
     public void testComponentsDropdownNavigation(By componentsCategory, By componentsDropdownMenuOption,
                                                  String expectedURL, String expectedTitle) {
