@@ -24,7 +24,7 @@ public abstract class BaseTest {
     protected static final String LINK = "https://naveenautomationlabs.com/opencart";
 
     @Parameters("browser")
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void setUp(@Optional("chrome") String browser) {
         WebDriver driver = createDriver(browser);
         threadLocalDriver.set(driver);
