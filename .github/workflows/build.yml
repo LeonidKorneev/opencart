@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   build:
-    name: Build On
+    name: Build and Test on ${{ matrix.os }}
 
     strategy:
       max-parallel: 4
@@ -33,100 +33,90 @@ jobs:
           java-version: '17'
           cache: maven
 
-      - name: Cache Maven m2 dependencies
-        uses: actions/cache@v4.2.3
-        with:
-          path: |
-            ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-
       - name: Install Firefox on macOS
-        if: ${{ matrix.os == 'macos-13' }}
+        if: matrix.os == 'macos-13'
         run: |
           brew update
           brew install --cask firefox
 
-      - name: Build with Maven for Ubuntu and macOS
-        if: ${{ matrix.os == 'ubuntu-latest' || matrix.os == 'macos-13' }}
+      - name: Build with Maven (skip tests)
         run: mvn clean -e install -Dmaven.test.skip=true
-
-      - name: Build with Maven for Windows
-        if: ${{ matrix.os == 'windows-latest' }}
-        run: mvn clean -e install "-Dmaven.test.skip=true"
 
       - name: Set CI_RUN Environment Variable
         run: echo "CI_RUN=true" >> $GITHUB_ENV
 
       - name: Run tests with Maven on Windows with Firefox
-        if: ${{ matrix.os == 'windows-latest' }}
+        if: matrix.os == 'windows-latest'
         run: mvn test -Pfirefox "-Dsurefire.reportNameSuffix=firefox"
 
       - name: Run tests with Maven on macOS with Firefox
-        if: ${{ matrix.os == 'macos-13' }}
+        if: matrix.os == 'macos-13'
         run: mvn test -Pfirefox -Dsurefire.reportNameSuffix=firefox
 
       - name: Run tests with Maven on Windows with Chrome
-        if: ${{ matrix.os == 'windows-latest' }}
+        if: matrix.os == 'windows-latest'
         run: mvn test -Pchrome "-Dsurefire.reportNameSuffix=chrome"
 
       - name: Run tests with Maven on macOS with Chrome
-        if: ${{ matrix.os == 'macos-13' }}
+        if: matrix.os == 'macos-13'
         run: mvn test -Pchrome -Dsurefire.reportNameSuffix=chrome
 
       - name: Run 'Smoke' group tests on Ubuntu
-        if: ${{ matrix.os == 'ubuntu-latest' }}
+        if: matrix.os == 'ubuntu-latest'
         run: mvn test -Psmoke
 
       - name: Run 'Regression' group tests on Ubuntu
-        if: ${{ matrix.os == 'ubuntu-latest' }}
+        if: matrix.os == 'ubuntu-latest'
         run: mvn test -Pregression
 
       - name: Run cross-browser testing on Ubuntu with Chrome and Firefox
-        if: ${{ matrix.os == 'ubuntu-latest' }}
+        if: matrix.os == 'ubuntu-latest'
         run: mvn test -PcrossBrowser
 
       - name: Run File loading test
-        if: ${{ matrix.os == 'ubuntu-latest' }}
+        if: matrix.os == 'ubuntu-latest'
         run: mvn test -Dtest=FileLoadingTest
 
       - name: Upload Surefire Reports (for debugging)
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: surefire-reports
+          name: surefire-reports-${{ matrix.os }}
           path: target/surefire-reports
 
-      - name: Checkout gh-pages branch
+      - name: Checkout gh-pages branch for Allure history
+        if: matrix.os == 'ubuntu-latest' && always()
         uses: actions/checkout@v4
-        if: always()
         continue-on-error: true
         with:
           ref: gh-pages
           path: gh-pages
 
-      - name: Copy Allure history
-        if: always()
+      - name: Prepare Allure history directory
+        if: matrix.os == 'ubuntu-latest' && always()
         run: |
           mkdir -p allure-history
-          cp -r gh-pages/history/* allure-history || true
+          if [ -d "gh-pages/history" ]; then
+            echo "Copying Allure history from gh-pages..."
+            cp -r gh-pages/history/* allure-history/
+          else
+            echo "No Allure history found in gh-pages. A new history will be generated."
+          fi
+          # ls -la allure-history
 
-      - name: Generate Allure Report
-        run: mvn allure:report
-
-      - name: Allure Report action from marketplace
-        uses: simple-elf/allure-report-action@master
-        if: always()
+      - name: Generate Allure Report using simple-elf
+        if: matrix.os == 'ubuntu-latest' && always()
+        uses: simple-elf/allure-report-action@v1.7
         with:
           allure_results: target/allure-results
           allure_history: allure-history
+          allure_report: allure-report-output
+          keep_history: true
 
-      - name: Deploy report to GitHub Pages
-        if: always()
+      - name: Deploy Allure report to GitHub Pages
+        if: matrix.os == 'ubuntu-latest' && always()
         uses: peaceiris/actions-gh-pages@v4
         with:
-          PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PUBLISH_BRANCH: gh-pages
-          PUBLISH_DIR: allure-history
-
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: allure-report-output
