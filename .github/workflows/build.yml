@@ -84,6 +84,7 @@ jobs:
           name: surefire-reports-${{ matrix.os }}
           path: target/surefire-reports
 
+
       - name: Checkout gh-pages branch for Allure history
         if: matrix.os == 'ubuntu-latest' && always()
         uses: actions/checkout@v4
@@ -91,18 +92,6 @@ jobs:
         with:
           ref: gh-pages
           path: gh-pages
-
-      - name: Prepare Allure history directory
-        if: matrix.os == 'ubuntu-latest' && always()
-        run: |
-          mkdir -p allure-history
-          if [ -d "gh-pages/history" ]; then
-            echo "Copying Allure history from gh-pages..."
-            cp -r gh-pages/history/* allure-history/
-          else
-            echo "No Allure history found in gh-pages. A new history will be generated."
-          fi
-          # ls -la allure-history
 
       - name: Generate Allure Report using simple-elf
         if: matrix.os == 'ubuntu-latest' && always()
