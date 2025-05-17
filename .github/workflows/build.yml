@@ -2,9 +2,9 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
   pull_request:
-    branches: [main]
+    branches: [ main ]
 
 permissions:
   checks: write
@@ -12,10 +12,18 @@ permissions:
   contents: write
 
 jobs:
-  selenium_test:
-    runs-on: ubuntu-latest
+  build:
+    name: Build On
+
+    strategy:
+      max-parallel: 4
+      matrix:
+        os: [ ubuntu-latest, windows-latest, macos-13 ]
+
+    runs-on: ${{matrix.os}}
+
     steps:
-      - name: Checkout repository
+      - name: Clone code from repo
         uses: actions/checkout@v4
 
       - name: Set up JDK 17
@@ -23,6 +31,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
+          cache: maven
 
       - name: Cache Maven m2 dependencies
         uses: actions/cache@v4.2.3
@@ -31,12 +40,55 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-maven-
 
-      - name: Install Chrome
-        uses: browser-actions/setup-chrome@latest
+      - name: Install Firefox on MacOS
+        if: ${{ matrix.os == 'macos-13' }}
+        run: brew install --cask firefox
 
-      - name: Run Maven tests
-        run: mvn clean test
-        continue-on-error: true
+      - name: Build with Maven for Ubuntu and macOS
+        if: ${{ matris.os == 'ubuntu-latest' || matrix.os == 'macos-13' }}
+        run: mvn clean -e install -Dmaven.test.skip=true
+
+      - name: Build with Maven for Windows
+        if: ${{ matrix.os == 'windows-latest' }}
+        run: mvn clean -e install '-Dmaven.test.skip=true'
+
+      - name: Set CI_RUN Enviroment Variable
+        run: echo "CI_RUN=true" >> $GITHUB_ENV
+
+      - name: Run tests with Maven on Windows with Firefox
+        if: ${{ matrix.os == 'windows-latest' }}
+        run: mvn test -Pfirefox '-Dsurefire.reportNameSuffix=firefox'
+
+      - name: Run tests with Maven on macOS with Firefox
+        if: ${{ matrix.os == 'macos-13' }}
+        run: mvn test -Pfirefox -Dsurefire.reportNameSuffix=firefox
+
+      - name: Run tests with Maven on Windows with Chrome
+        if: ${{ matrix.os == 'windows-latest' }}
+        run: mvn test -Pchrome '-Dsurefire.reportNameSuffix=chrome'
+
+      - name: Run tests with Maven on macOS with Chrome
+        if: ${{ matrix.os == 'macos-13' }}
+        run: mvn test -Pchrome -Dsurefire.reportNameSuffix=chrome
+
+      - name: Run 'Smoke' group tests on Ubuntu
+        if: ${{ matrix.os == 'ubuntu-latest' }}
+        run: mvn test -Psmoke
+
+      - name: Run 'Regression' group tests on Ubuntu
+        if: ${{ matrix.os == 'ubuntu-latest' }}
+        run: mvn test -Pregression
+
+      - name: Run cross-browser testing on Ubuntu with Chrome and Firefox
+        if: ${{ matrix.os == 'ubuntu-latest' }}
+        run: mvn test -PcrossBrowser
+
+      - name: Run File loading test
+        if: ${{ matrix.os == 'ubuntu-latest' }}
+        run: mvn test -Dtest=FileLoadingTest
+
+
+
 
       - name: Upload Surefire Reports (for debugging)
         if: failure()
