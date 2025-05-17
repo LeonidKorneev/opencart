@@ -75,7 +75,7 @@ jobs:
 
       - name: Run File loading test
         if: matrix.os == 'ubuntu-latest'
-        run: mvn test -Dtest=FileLoadingTest
+        run: mvn test '-Dtest=FileUploadingTest'
 
       - name: Upload Surefire Reports (for debugging)
         if: failure()

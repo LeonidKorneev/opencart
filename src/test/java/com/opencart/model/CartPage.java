@@ -38,7 +38,7 @@ public class CartPage extends BasePage<CartPage> {
         } catch (UnhandledAlertException e) {
             handleAlertIfPresent();
 
-            getWait2().until(ExpectedConditions.visibilityOf(addedItemQuantity));
+            getWait5().until(ExpectedConditions.visibilityOf(addedItemQuantity));
             return addedItemQuantity.getAttribute("value");
 
         }
