@@ -14,7 +14,7 @@ import java.util.List;
 
 public class LoginTest extends BaseTest {
 
-    @Test(groups = {"smoke", "regression", "crossBrowser"})
+    @Test(groups = {"smoke", "regression"})
     @Story("Login")
     @Severity(SeverityLevel.CRITICAL)
     @Description("Verify a registered user can log in")
@@ -29,7 +29,7 @@ public class LoginTest extends BaseTest {
         Assert.assertEquals(actualHeading, "My Account");
     }
 
-    @Test(groups = {"regression", "crossBrowser"})
+    @Test(groups = "regression")
     @Story("Login")
     @Severity(SeverityLevel.NORMAL)
     @Description("Verify the login page has the supposed sidebar menu options")

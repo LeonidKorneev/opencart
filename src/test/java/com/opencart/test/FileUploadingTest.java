@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 
 public class FileUploadingTest extends BaseTest {
 
-    @Test(groups = {"regression", "crossBrowser"})
+    @Test(groups = "regression")
     @Story("Product page")
     @Severity(SeverityLevel.NORMAL)
     @Description("Verify the successful file uploading on the Apple Cinema page")

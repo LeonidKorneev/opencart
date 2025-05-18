@@ -61,17 +61,21 @@ jobs:
         if: matrix.os == 'macos-13'
         run: mvn test -Pchrome -Dsurefire.reportNameSuffix=chrome
 
-      - name: Run cross-browser testing on Ubuntu with Chrome and Firefox
-        if: matrix.os == 'ubuntu-latest'
-        run: mvn test -PcrossBrowser -Dallure.results.directory=allure-results/crossbrowser
-
       - name: Run 'Smoke' group tests on Ubuntu
         if: matrix.os == 'ubuntu-latest'
-        run: mvn test -Psmoke -Dallure.results.directory=allure-results/smoke
+        run: mvn test -Psmoke
 
       - name: Run 'Regression' group tests on Ubuntu
         if: matrix.os == 'ubuntu-latest'
-        run: mvn test -Pregression -Dallure.results.directory=allure-results/regression
+        run: mvn test -Pregression
+
+      - name: Run cross-browser testing on Ubuntu with Chrome and Firefox
+        if: matrix.os == 'ubuntu-latest'
+        run: mvn test -PcrossBrowser
+
+      - name: Run File loading test
+        if: matrix.os == 'ubuntu-latest'
+        run: mvn test '-Dtest=FileUploadingTest'
 
       - name: Upload Surefire Reports (for debugging)
         if: failure()
@@ -79,12 +83,6 @@ jobs:
         with:
           name: surefire-reports-${{ matrix.os }}
           path: target/surefire-reports
-
-      - name: Combine Allure results
-        if: matrix.os == 'ubuntu-latest' && always()
-        run: |
-          mkdir -p allure-results/combined
-          find allure-results/ -type f -exec cp {} allure-results/combined/ \;
 
       - name: Checkout gh-pages branch for Allure history
         if: matrix.os == 'ubuntu-latest' && always()
@@ -96,9 +94,9 @@ jobs:
 
       - name: Generate Allure Report using simple-elf
         if: matrix.os == 'ubuntu-latest' && always()
-        uses: simple-elf/allure-report-action@master
+        uses: simple-elf/allure-report-action@v1.7
         with:
-          allure_results: allure-results/combined
+          allure_results: target/allure-results
           allure_history: allure-history
 
       - name: Deploy Allure report to GitHub Pages

@@ -13,7 +13,7 @@ import org.testng.annotations.Test;
 
 public class NavigationTest extends BaseTest {
 
-    @Test(groups = {"smoke", "crossBrowser"})
+    @Test(groups = "smoke")
     @Story("Navigation")
     @Severity(SeverityLevel.BLOCKER)
     @Description("Verify the Store home page is opened via current URL and the page title")
@@ -31,7 +31,7 @@ public class NavigationTest extends BaseTest {
     }
 
     @Test(dataProvider = "withDropdownNavigationData", dataProviderClass = TestData.class,
-            groups = {"smoke", "crossBrowser"})
+            groups = "smoke")
     @Story("Navigation")
     @Severity(SeverityLevel.CRITICAL)
     @Description("TC_02 Verify the Store navigation menu options via dropdown")
@@ -48,7 +48,7 @@ public class NavigationTest extends BaseTest {
     }
 
     @Test(dataProvider = "withoutDropdownNavigationData", dataProviderClass = TestData.class,
-            groups = {"smoke", "crossBrowser"})
+            groups = "smoke")
     @Story("Navigation")
     @Severity(SeverityLevel.CRITICAL)
     @Description("TC_03 Verify the Store navigation menu options without dropdown")
@@ -64,7 +64,7 @@ public class NavigationTest extends BaseTest {
     }
 
     @Test(dataProvider = "componentsCategoryNavigationData", dataProviderClass = TestData.class,
-            groups = {"smoke", "crossBrowser"})
+            groups = "smoke")
     @Story("Navigation")
     @Severity(SeverityLevel.CRITICAL)
     @Description("TC_04 Verify the 'Components' category dropdown options navigation")

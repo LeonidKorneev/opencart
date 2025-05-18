@@ -11,7 +11,7 @@ import org.testng.annotations.Test;
 
 public class SearchTest extends BaseTest {
 
-    @Test(groups = {"smoke", "regression"})
+    @Test(groups = "smoke")
     @Story("Search field")
     @Severity(SeverityLevel.CRITICAL)
     @Description("Verify the search field visibility")
@@ -23,7 +23,7 @@ public class SearchTest extends BaseTest {
         Assert.assertTrue(isSearchFieldVisible, "The Search field is not visible");
     }
 
-    @Test(groups = {"regression", "crossBrowser"})
+    @Test(groups = "regression")
     @Story("Search field")
     @Severity(SeverityLevel.NORMAL)
     @Description("Verify the search result page heading")
@@ -38,7 +38,7 @@ public class SearchTest extends BaseTest {
         Assert.assertEquals(searchPageHeading, searchValue);
     }
 
-    @Test(groups = {"regression", "crossBrowser"})
+    @Test(groups = "regression")
     @Story("Search field")
     @Severity(SeverityLevel.MINOR)
     @Description("Verify the message when the search term does not match any products")
