@@ -63,15 +63,15 @@ jobs:
 
       - name: Run 'Smoke' group tests on Ubuntu
         if: matrix.os == 'ubuntu-latest'
-        run: mvn test -Psmoke
+        run: mvn test -Psmoke -Dallure.results.directory=allure-results/smoke
 
       - name: Run 'Regression' group tests on Ubuntu
         if: matrix.os == 'ubuntu-latest'
-        run: mvn test -Pregression
+        run: mvn test -Pregression -Dallure.results.directory=allure-results/regression
 
       - name: Run cross-browser testing on Ubuntu with Chrome and Firefox
         if: matrix.os == 'ubuntu-latest'
-        run: mvn test -PcrossBrowser
+        run: mvn test -PcrossBrowser -Dallure.results.directory=allure-results/crossbrowser
 
       - name: Run File loading test
         if: matrix.os == 'ubuntu-latest'
@@ -84,6 +84,11 @@ jobs:
           name: surefire-reports-${{ matrix.os }}
           path: target/surefire-reports
 
+      - name: Combine Allure results
+        if: matrix.os == 'ubuntu-latest' && always()
+        run: |
+          mkdir -p allure-results/combined
+          find allure-results/ -type f -exec cp {} allure-results/combined/ \;
 
       - name: Checkout gh-pages branch for Allure history
         if: matrix.os == 'ubuntu-latest' && always()
@@ -95,9 +100,9 @@ jobs:
 
       - name: Generate Allure Report using simple-elf
         if: matrix.os == 'ubuntu-latest' && always()
-        uses: simple-elf/allure-report-action@v1.7
+        uses: simple-elf/allure-report-action@master
         with:
-          allure_results: target/allure-results
+          allure_results: allure-results/combined
           allure_history: allure-history
 
       - name: Deploy Allure report to GitHub Pages
