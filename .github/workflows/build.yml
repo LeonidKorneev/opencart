@@ -59,7 +59,7 @@ jobs:
       - name: Set CI_RUN Environment Variable
         run: echo "CI_RUN=true" >> $GITHUB_ENV
 
-      # Windows tests (only on default push/PR, not on manual dispatch)
+      # Windows tests (only on default push/PR)
       - name: Run tests with Maven on Windows with Firefox
         if: matrix.os == 'windows-latest' && github.event_name != 'workflow_dispatch'
         run: mvn test -Pfirefox "-Dsurefire.reportNameSuffix=firefox"
@@ -79,7 +79,7 @@ jobs:
 
       # Ubuntu: Smoke suite
       - name: Run 'Smoke' group tests on Ubuntu
-        if: matrix.os == 'ubuntu-latest' && env.SUITE == 'smoke'
+        if: matrix.os == 'ubuntu-latest' && (env.SUITE == 'smoke' || github.event_name != 'workflow_dispatch')
         run: mvn test -Psmoke
 
       # Ubuntu: Regression suite
