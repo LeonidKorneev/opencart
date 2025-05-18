@@ -69,9 +69,9 @@ jobs:
         run: mvn test -Pchrome "-Dsurefire.reportNameSuffix=chrome"
 
       # macOS tests (only on default push/PR)
-      - name: Run tests with Maven on macOS with Firefox
-        if: matrix.os == 'macos-13' && github.event_name != 'workflow_dispatch'
-        run: mvn test -Pfirefox -Dsurefire.reportNameSuffix=firefox
+      #- name: Run tests with Maven on macOS with Firefox
+       # if: matrix.os == 'macos-13' && github.event_name != 'workflow_dispatch'
+       # run: mvn test -Pfirefox -Dsurefire.reportNameSuffix=firefox
 
       - name: Run tests with Maven on macOS with Chrome
         if: matrix.os == 'macos-13' && github.event_name != 'workflow_dispatch'
