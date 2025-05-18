@@ -13,11 +13,7 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <aspectj.version>1.9.21</aspectj.version>
-        <allure.version>2.29.1</allure.version>
-        <selenium.version>4.31.0</selenium.version>
-        <testng.version>7.11.0</testng.version>
-        <webdrivermanager.version>6.1.0</webdrivermanager.version>
+        <aspectj.version>1.9.20.1</aspectj.version>
 
         <test.skip>false</test.skip>
     </properties>
@@ -26,28 +22,23 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>${selenium.version}</version>
+            <version>4.31.0</version>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>${testng.version}</version>
+            <version>7.11.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
-            <version>${webdrivermanager.version}</version>
+            <version>6.1.0</version>
         </dependency>
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-testng</artifactId>
-            <version>${allure.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjweaver</artifactId>
-            <version>${aspectj.version}</version>
+            <version>2.29.1</version>
         </dependency>
     </dependencies>
 
@@ -156,10 +147,6 @@
                 <groupId>io.qameta.allure</groupId>
                 <artifactId>allure-maven</artifactId>
                 <version>2.15.2</version>
-                <configuration>
-                    <reportVersion>${allure.version}</reportVersion>
-                    <resultsDirectory>${project.build.directory}/allure-results</resultsDirectory>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -167,14 +154,24 @@
                 <version>3.2.5</version>
                 <configuration>
                     <skipTests>${test.skip}</skipTests>
-                    <testFailureIgnore>true</testFailureIgnore>
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                     </argLine>
-                    <systemPropertyVariables>
-                        <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
-                    </systemPropertyVariables>
+                    <suiteXmlFiles>
+                        <!--                        <suiteXmlFile>xmlSuits/crossBrowser.xml</suiteXmlFile>-->
+                        <!--                        <suiteXmlFile>xmlSuits/smoke.xml</suiteXmlFile>-->
+                        <!--                        <suiteXmlFile>xmlSuits/regression.xml</suiteXmlFile>-->
+                        <!--                        <suiteXmlFile>testng-chrome.xml</suiteXmlFile>-->
+                        <!--                        <suiteXmlFile>testng-firefox.xml</suiteXmlFile>-->
+                    </suiteXmlFiles>
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjweaver</artifactId>
+                        <version>${aspectj.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>
