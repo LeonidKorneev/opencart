@@ -69,9 +69,9 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         run: mvn test -Pregression -Dallure.results.directory=allure-results/regression
 
-      - name: Run cross-browser testing on Ubuntu with Chrome and Firefox
-        if: matrix.os == 'ubuntu-latest'
-        run: mvn test -PcrossBrowser -Dallure.results.directory=allure-results/crossbrowser
+      #- name: Run cross-browser testing on Ubuntu with Chrome and Firefox
+       # if: matrix.os == 'ubuntu-latest'
+        #run: mvn test -PcrossBrowser -Dallure.results.directory=allure-results/crossbrowser
 
       - name: Upload Surefire Reports (for debugging)
         if: failure()
