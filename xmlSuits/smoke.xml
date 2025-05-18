@@ -7,6 +7,10 @@
         </run>
     </groups>
 
+    <listeners>
+        <listener class-name="io.qameta.allure.testng.AllureTestNg"/>
+    </listeners>
+
     <test name="Smoke Test Run on Chrome" verbose="10">
         <parameter name="browser" value="chrome"/>
         <classes>
