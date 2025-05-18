@@ -73,10 +73,6 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         run: mvn test -PcrossBrowser -Dallure.results.directory=allure-results/crossbrowser
 
-      - name: Run File loading test
-        if: matrix.os == 'ubuntu-latest'
-        run: mvn test '-Dtest=FileUploadingTest'
-
       - name: Upload Surefire Reports (for debugging)
         if: failure()
         uses: actions/upload-artifact@v4
