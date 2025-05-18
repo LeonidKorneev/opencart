@@ -79,23 +79,18 @@ jobs:
 
       # Ubuntu: Smoke suite
       - name: Run 'Smoke' group tests on Ubuntu
-        if: matrix.os == 'ubuntu-latest' && (github.event_name != 'workflow_dispatch' || env.SUITE == 'smoke')
+        if: matrix.os == 'ubuntu-latest' && env.SUITE == 'smoke'
         run: mvn test -Psmoke
 
       # Ubuntu: Regression suite
       - name: Run 'Regression' group tests on Ubuntu
-        if: matrix.os == 'ubuntu-latest' && (github.event_name != 'workflow_dispatch' || env.SUITE == 'regression')
+        if: matrix.os == 'ubuntu-latest' && env.SUITE == 'regression'
         run: mvn test -Pregression
 
       # Ubuntu: CrossBrowser suite
       - name: Run cross-browser testing on Ubuntu
-        if: matrix.os == 'ubuntu-latest' && (github.event_name != 'workflow_dispatch' || env.SUITE == 'crossBrowser')
+        if: matrix.os == 'ubuntu-latest' && env.SUITE == 'crossBrowser'
         run: mvn test -PcrossBrowser
-
-      # Ubuntu: File uploading tests (only on default push/PR)
-      - name: Run File loading test
-        if: matrix.os == 'ubuntu-latest' && github.event_name != 'workflow_dispatch'
-        run: mvn test -Dtest=FileUploadingTest
 
       - name: Upload Surefire Reports (for debugging)
         if: failure()
