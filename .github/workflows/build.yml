@@ -5,6 +5,17 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+  workflow_dispatch:
+      inputs:
+        suite:
+          description: 'Какой suite запускать'
+          required: true
+          default: crossBrowser
+          type: choice
+          options:
+            - smoke
+            - regression
+            - crossBrowser
 
 permissions:
   checks: write
