@@ -61,6 +61,10 @@ jobs:
         if: matrix.os == 'macos-13'
         run: mvn test -Pchrome -Dsurefire.reportNameSuffix=chrome
 
+      - name: Run cross-browser testing on Ubuntu with Chrome and Firefox
+        if: matrix.os == 'ubuntu-latest'
+        run: mvn test -PcrossBrowser -Dallure.results.directory=allure-results/crossbrowser
+
       - name: Run 'Smoke' group tests on Ubuntu
         if: matrix.os == 'ubuntu-latest'
         run: mvn test -Psmoke -Dallure.results.directory=allure-results/smoke
@@ -68,10 +72,6 @@ jobs:
       - name: Run 'Regression' group tests on Ubuntu
         if: matrix.os == 'ubuntu-latest'
         run: mvn test -Pregression -Dallure.results.directory=allure-results/regression
-
-      #- name: Run cross-browser testing on Ubuntu with Chrome and Firefox
-       # if: matrix.os == 'ubuntu-latest'
-        #run: mvn test -PcrossBrowser -Dallure.results.directory=allure-results/crossbrowser
 
       - name: Upload Surefire Reports (for debugging)
         if: failure()
