@@ -6,16 +6,16 @@ on:
   pull_request:
     branches: [ main ]
   workflow_dispatch:
-      inputs:
-        suite:
-          description: 'Какой suite запускать'
-          required: true
-          default: crossBrowser
-          type: choice
-          options:
-            - smoke
-            - regression
-            - crossBrowser
+    inputs:
+      suite:
+        description: 'Какой suite запускать'
+        required: true
+        default: crossBrowser
+        type: choice
+        options:
+          - smoke
+          - regression
+          - crossBrowser
 
 permissions:
   checks: write
@@ -25,13 +25,13 @@ permissions:
 jobs:
   build:
     name: Build and Test on ${{ matrix.os }}
-
     strategy:
       max-parallel: 4
       matrix:
         os: [ ubuntu-latest, windows-latest, macos-13 ]
-
     runs-on: ${{ matrix.os }}
+    env:
+      SUITE: ${{ github.event.inputs.suite }}
 
     steps:
       - name: Clone code from repo
@@ -51,42 +51,48 @@ jobs:
           brew install --cask firefox
 
       - name: Build with Maven (skip tests)
-        run: mvn clean -e install '-Dmaven.test.skip=true'
+        run: mvn clean -e install -Dmaven.test.skip=true
 
       - name: Set CI_RUN Environment Variable
         run: echo "CI_RUN=true" >> $GITHUB_ENV
 
+      # Windows tests (only on default push/PR, not on manual dispatch)
       - name: Run tests with Maven on Windows with Firefox
-        if: matrix.os == 'windows-latest'
+        if: matrix.os == 'windows-latest' && github.event_name != 'workflow_dispatch'
         run: mvn test -Pfirefox "-Dsurefire.reportNameSuffix=firefox"
 
-      - name: Run tests with Maven on macOS with Firefox
-        if: matrix.os == 'macos-13'
-        run: mvn test -Pfirefox -Dsurefire.reportNameSuffix=firefox
-
       - name: Run tests with Maven on Windows with Chrome
-        if: matrix.os == 'windows-latest'
+        if: matrix.os == 'windows-latest' && github.event_name != 'workflow_dispatch'
         run: mvn test -Pchrome "-Dsurefire.reportNameSuffix=chrome"
 
+      # macOS tests (only on default push/PR)
+      - name: Run tests with Maven on macOS with Firefox
+        if: matrix.os == 'macos-13' && github.event_name != 'workflow_dispatch'
+        run: mvn test -Pfirefox -Dsurefire.reportNameSuffix=firefox
+
       - name: Run tests with Maven on macOS with Chrome
-        if: matrix.os == 'macos-13'
+        if: matrix.os == 'macos-13' && github.event_name != 'workflow_dispatch'
         run: mvn test -Pchrome -Dsurefire.reportNameSuffix=chrome
 
+      # Ubuntu: Smoke suite
       - name: Run 'Smoke' group tests on Ubuntu
-        if: matrix.os == 'ubuntu-latest'
+        if: matrix.os == 'ubuntu-latest' && (github.event_name != 'workflow_dispatch' || env.SUITE == 'smoke')
         run: mvn test -Psmoke
 
+      # Ubuntu: Regression suite
       - name: Run 'Regression' group tests on Ubuntu
-        if: matrix.os == 'ubuntu-latest'
+        if: matrix.os == 'ubuntu-latest' && (github.event_name != 'workflow_dispatch' || env.SUITE == 'regression')
         run: mvn test -Pregression
 
-      - name: Run cross-browser testing on Ubuntu with Chrome and Firefox
-        if: matrix.os == 'ubuntu-latest'
+      # Ubuntu: CrossBrowser suite
+      - name: Run cross-browser testing on Ubuntu
+        if: matrix.os == 'ubuntu-latest' && (github.event_name != 'workflow_dispatch' || env.SUITE == 'crossBrowser')
         run: mvn test -PcrossBrowser
 
+      # Ubuntu: File uploading tests (only on default push/PR)
       - name: Run File loading test
-        if: matrix.os == 'ubuntu-latest'
-        run: mvn test '-Dtest=FileUploadingTest'
+        if: matrix.os == 'ubuntu-latest' && github.event_name != 'workflow_dispatch'
+        run: mvn test -Dtest=FileUploadingTest
 
       - name: Upload Surefire Reports (for debugging)
         if: failure()
