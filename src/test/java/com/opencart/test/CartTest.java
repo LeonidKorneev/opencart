@@ -11,7 +11,7 @@ import org.testng.annotations.Test;
 
 public class CartTest extends BaseTest {
 
-    @Test(groups = {"smoke", "regression"})
+    @Test(groups = {"smoke", "regression", "crossBrowser"})
     @Story("Cart preview")
     @Severity(SeverityLevel.CRITICAL)
     @Description("Verify the added item name via cart preview")
@@ -27,7 +27,7 @@ public class CartTest extends BaseTest {
         Assert.assertEquals(actualAddedItemName, expextedItemName);
     }
 
-    @Test(groups = {"smoke", "regression"})
+    @Test(groups = {"smoke", "regression", "crossBrowser"})
     @Story("Cart preview")
     @Severity(SeverityLevel.CRITICAL)
     @Description("Verify the added item quantity via cart preview")
@@ -42,7 +42,7 @@ public class CartTest extends BaseTest {
         Assert.assertEquals(actualAddedItemQuantity, "1");
     }
 
-    @Test(groups = {"smoke", "regression"})
+    @Test(groups = {"smoke", "regression", "crossBrowser"})
     @Story("Cart")
     @Severity(SeverityLevel.CRITICAL)
     @Description("Verify the added item name via cart")
@@ -58,7 +58,7 @@ public class CartTest extends BaseTest {
         Assert.assertEquals(actualAddedItemName, expectedItemName);
     }
 
-    @Test(groups = {"smoke", "regression"})
+    @Test(groups = {"smoke", "regression", "crossBrowser"})
     @Story("Cart")
     @Severity(SeverityLevel.CRITICAL)
     @Description("Verify the added item quantity via cart")

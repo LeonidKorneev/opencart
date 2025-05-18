@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 
 public class ProductTest extends BaseTest {
 
-    @Test(groups = {"smoke", "regression"})
+    @Test(groups = {"smoke", "regression", "crossBrowser"})
     @Story("Product page")
     @Severity(SeverityLevel.NORMAL)
     @Description("Verify the opened product name")
@@ -27,7 +27,7 @@ public class ProductTest extends BaseTest {
         Assert.assertEquals(actualProductName, "iMac");
     }
 
-    @Test(groups = "regression")
+    @Test(groups = {"regression", "crossBrowser"})
     @Story("Product page")
     @Severity(SeverityLevel.MINOR)
     @Description("Verify the opened product breadcrumb path")
@@ -42,7 +42,7 @@ public class ProductTest extends BaseTest {
         Assert.assertEquals(actualProductName, "Desktops Mac iMac");
     }
 
-    @Test(groups = "regression")
+    @Test(groups = {"regression", "crossBrowser"})
     @Story("Product page")
     @Severity(SeverityLevel.MINOR)
     @Description("Verify the Apple Cinema minimal quantity warning message")
