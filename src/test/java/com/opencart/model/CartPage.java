@@ -21,12 +21,12 @@ public class CartPage extends BasePage<CartPage> {
 
     public String getAddedItemName() {
         try {
-            getWait2().until(ExpectedConditions.visibilityOf(addedItemName));
+            getWait5().until(ExpectedConditions.visibilityOf(addedItemName));
             return addedItemName.getText();
         } catch (UnhandledAlertException e) {
             handleAlertIfPresent();
 
-            getWait2().until(ExpectedConditions.visibilityOf(addedItemName));
+            getWait5().until(ExpectedConditions.visibilityOf(addedItemName));
             return addedItemName.getText();
         }
     }
