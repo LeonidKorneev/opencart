@@ -84,6 +84,15 @@ loading.</li>
 <li><strong>Run Tests</strong>: Executes different test suites based on the operating system and browser.</li>
 <li><strong>Generate Reports</strong>: Creates test reports using Allure and uploads them to GitHub Pages.</li>
 </ol>
+<p>
+The CI pipeline also supports <strong>manual execution</strong> via the <code>workflow_dispatch</code> trigger in GitHub Actions. 
+This allows you to run tests manually from the GitHub UI with a selectable test suite:
+</p>
+<ul>
+  <li><strong>smoke</strong> – basic functionality tests</li>
+  <li><strong>regression</strong> – full regression suite</li>
+  <li><strong>crossBrowser</strong> – cross-browser testing</li>
+</ul>
 
 <h2>Running Tests</h2>
 <h4>Running Tests is performed on different browsers and operating systems via profiles for Google Chrome and Firefox.</h4>
